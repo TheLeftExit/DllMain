@@ -1,0 +1,26 @@
+<Project>
+	<Target Name="InjectDllMain" DependsOnTargets="SetupOSSpecificProps" BeforeTargets="LinkNative" Condition="'$(DllMainSourceFile)' != ''">
+		
+		<PropertyGroup>
+			<_ClPath>$(MSBuildThisFileDirectory)cl-$(RuntimeIdentifier).bat</_ClPath>
+			<_MangledDllMain Condition="'$(RuntimeIdentifier)' == 'win-x86'">_DllMain@12</_MangledDllMain>
+			<_MangledDllMain Condition="'$(_MangledDllMain)' == ''">DllMain</_MangledDllMain>
+		</PropertyGroup>
+		
+		<Error Condition="!Exists('$(_ClPath)')" Text="DllMain not supported for $(RuntimeIdentifier)." />
+		
+		<Exec Command="$(_ClPath) /c $(DllMainSourceFile) /Fo:$(NativeIntermediateOutputPath)dllmain.obj" />
+		
+		<ItemGroup>
+			<LinkerArg Remove="@(NativeLibrary->'&quot;%(Identity)&quot;')" />
+
+			<NativeLibrary Remove="$(IlcSdkPath)dllmain$(ObjectSuffix)" />
+			<NativeLibrary Include="$(NativeIntermediateOutputPath)dllmain.obj" />
+
+			<LinkerArg Include="@(NativeLibrary->'&quot;%(Identity)&quot;')" />
+
+			<LinkerArg Include="/INCLUDE:$(_MangledDllMain)" />
+		</ItemGroup>
+		
+	</Target>
+</Project>
