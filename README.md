@@ -1,6 +1,6 @@
 ## DllMain
 
-This appropriately named package allows you to **safely** define a `DllMain` function for your NativeAOT library in plain C.
+This appropriately named package allows you to **safely** define a `DllMain` function for your NativeAOT library in C.
 
 ### Getting started
 
@@ -14,5 +14,6 @@ This package declares another target that gets injected between [SetupOSSpecific
 - Builds the user-defined `.c` file,
 - Removes the toolchain-defined object file with an empty `DllMain` from linker arguments,
 - Adds compiled user-defined C code to linker arguments.
+- Forces the linker to include the otherwise unreferenced new `DllMain` function in the final library.
 
 As long as the user doesn't call managed code from their `DllMain` function, the resulting library should not break any rules imposed by the OS or the NativeAOT runtime/toolchain.

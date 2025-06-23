@@ -2,11 +2,11 @@
 <package >
 	<metadata>
 		<id>DllMain</id>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 		<authors>TheLeftExit</authors>
 		<license type="expression">Unlicense</license>
 		<readme>README.md</readme>
-		<repository url="https://github.com/TheLeftExit/DllMain" />
+		<repository type="git" url="https://github.com/TheLeftExit/DllMain" />
 		<description>MSBuild target to safely embed a C-based DllMain function into a NativeAOT library project.</description>
 		<tags>NativeAOT DllMain hooking injection</tags>
 	</metadata>

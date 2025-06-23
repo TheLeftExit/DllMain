@@ -11,6 +11,8 @@ To get started:
 Here's what your `DllMain` function might look like - feel free to copy.
 
 ```
+#include <windows.h>
+
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 {
     DisableThreadLibraryCalls(hinstDLL);
@@ -25,7 +27,7 @@ Tips:
 
 - To call methods from your .NET code, mark them with `UnmanagedCallersOnlyAttribute` and specify the entry point.
   You can then declare the same function in your C code as external, and call it as needed.
-  C#: `[UnmanagedCallersOnly(CallConvs = [typeof(CallConvStdcall)], EntryPoint = "HookedMethod")] public void HookedMethod() { }`
+  C#: `[UnmanagedCallersOnly(CallConvs = [typeof(CallConvStdcall)], EntryPoint = "HookedMethod")] public static void HookedMethod() { }`
   C: `void __stdcall HookedMethod();`
 
 - Remember that any code directly inside `DllMain` will run under a loader lock.
